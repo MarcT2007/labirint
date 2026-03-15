@@ -3,5 +3,20 @@
 	margin:0;
 }
 body{
-	background-image:url('Ozadje_z_labirintom.png');
+	background-image:url('labirint.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:fixed;
+	height:100%;
+	width:100%;
+}
+.pika-bg {
+  position: absolute;
+  top: 125px;    /* y */
+  left: 615px;  /* x */
+  width: 10px;  /* velikost ciljne točke*/
+  height: 10px;
+  cursor: pointer;
+  z-index: 20;
+  background: red; /* neviden, a lažje klikljiv */
 }
