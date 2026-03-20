@@ -2,7 +2,7 @@ window.onload = function () {
     var gary = document.getElementById("gary");
     var spuzi = document.getElementById("spuzi");
 
-    var speed = 3;
+    var speed = 2;
 
     var path = [
         {x: 615, y:135}, {x: 655, y:180}, {x: 667, y:175}, {x: 677, y:182},
