@@ -1,7 +1,7 @@
 https://worksheets.theteacherscorner.net/make-your-own/maze/
 # Animacija Spuzija
 
-Preprosta spletna animacija, kjer dva lika – **Gary** in **Spuzi** – hodita po labirintu in dosežeta cilj, ob prikazu končne animacije.  
+Preprosta spletna animacija, kjer dva lika – **Gary** in **Spuži** – hodita po labirintu in dosežeta cilj, ob prikazu končne animacije.
 
 ## Funkcionalnosti
 
@@ -27,4 +27,4 @@ Preprosta spletna animacija, kjer dva lika – **Gary** in **Spuzi** – hodita 
 
 1. Odpri `index.html` v brskalniku.  
 2. Animacija se samodejno zažene ob nalaganju strani.  
-3. Opazuj, kako Gary vodi Spuzija po labirintu do konca.  
+3. Opazuj, kako Gary vodi Spuzija po labirintu do konca.
