@@ -14,16 +14,16 @@ body{
     position: absolute;
     width: 20px;
     height: 20px;
-	background:url("../sprites/gary_levo.gif") no-repeat center center;
+	background:url("../sprites/gary_prava.gif") no-repeat center center;
 	background-size:contain;
     position: absolute;
     transform: translate(-50%, -50%);
 }
 #spuzi {
     position: absolute;
-    width: 20px;
-    height: 20px;
-	background:url("../sprites/spuzi_levo.gif") no-repeat center center;
+    width: 30px;
+    height: 30px;
+	background:url("../sprites/spuzi_prava.gif") no-repeat center center;
 	background-size:contain;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -42,15 +42,17 @@ body{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+	margin-top:500px;
+	margin-left:1000px;
+    width: 250px;
+    height: 250px;
     background-image: url('../sprites/konec.gif');
     background-size: cover;
     background-position: center;
-    z-index: 100;
+    z-index: 90;
     opacity: 0;            /* skrito na začetku */
     pointer-events: none;  /* ne moti klikov */
-    transition: opacity 0.5s ease-in-out; /* za fade efekt */
+    transition: opacity 0.5s ease-in-out;	/* za fade efekt */
 }
 #overlay.show {
     opacity: 1;            /* prikazano */

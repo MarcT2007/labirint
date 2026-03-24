@@ -1,10 +1,20 @@
 window.onload = function () {
-    var gary = document.getElementById("gary");
-    var spuzi = document.getElementById("spuzi");
 
-    var speed = 1.5;
+    // ---- DOM elementi ----
+    const gary = document.getElementById("gary");
+    const spuzi = document.getElementById("spuzi");
+    const overlay = document.getElementById("overlay");
+    const restartBtn = document.getElementById("restartBtn");
+    const box = document.getElementById("box"); // ciljna točka
 
-    var path = [
+    let animationId = null;
+    const speed = 1,5; // normalna hitrost
+
+    const ORIGINAL_WIDTH = 1200;
+    const ORIGINAL_HEIGHT = 1000;
+
+    // ---- POT (originalne px koordinate) ----
+    let path = [
         {x: 615, y:135}, {x: 655, y:180}, {x: 667, y:175}, {x: 677, y:182},
         {x: 690, y:177}, {x: 697, y:185}, {x: 690, y:200}, {x: 707, y:219},
         {x: 719, y:214}, {x: 730, y:220}, {x: 740, y:215}, {x: 750, y:225},
@@ -44,33 +54,59 @@ window.onload = function () {
         {x: 958, y:548}, {x: 938, y:524}, {x: 948, y:514}, {x: 968, y:534},
         {x: 980, y:530}, {x: 990, y:540}, {x: 1005, y:532}, {x: 1033, y:565},
         {x: 1008, y:583}, {x: 1000, y:573}, {x: 990, y:583}, {x: 1003, y:603}, 
-		{x: 1030, y:610}
+        {x: 1030, y:610}
     ];
 
-    // ---- GARY ----
-    let xGary = path[0].x;
-    let yGary = path[0].y;
-    let indexGary = 0;
+    let xGary, yGary, indexGary;
+    let xSpuzi, ySpuzi, spuziQueue;
 
-    gary.style.left = xGary + "px";
-    gary.style.top = yGary + "px";
+    // ---- FUNKCIJA ZA RESPONSIVE POZICIJE ----
+    function setPosition(el, x, y) {
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
 
-    // ---- SPUZI ----
-    let xSpuzi = path[0].x;
-    let ySpuzi = path[0].y;
-    let spuziQueue = [];
+        const imgRatio = ORIGINAL_WIDTH / ORIGINAL_HEIGHT;
+        const screenRatio = screenW / screenH;
 
-    spuzi.style.left = xSpuzi + "px";
-    spuzi.style.top = ySpuzi + "px";
+        let width, height, offsetX = 0, offsetY = 0;
 
-    // ---- KONČNA SLIKA ----
-    var overlay = document.createElement("div");
-    overlay.style.display = "block"; // skrita na začetku
-	
-    document.body.appendChild(overlay);
+        if (screenRatio > imgRatio) {
+            height = screenH;
+            width = height * imgRatio;
+            offsetX = (screenW - width) / 2;
+        } else {
+            width = screenW;
+            height = width / imgRatio;
+            offsetY = (screenH - height) / 2;
+        }
+
+        el.style.left = (x / ORIGINAL_WIDTH * width + offsetX) + "px";
+        el.style.top  = (y / ORIGINAL_HEIGHT * height + offsetY) + "px";
+    }
+
+    function updateDirection(el, dx) {
+        if (dx > 0) el.style.transform = "translate(-50%, -50%) scaleX(1)";
+        else if (dx < 0) el.style.transform = "translate(-50%, -50%) scaleX(-1)";
+    }
+
+    function resetAnimation() {
+        if (animationId) cancelAnimationFrame(animationId);
+
+        xGary = path[0].x; yGary = path[0].y; indexGary = 0;
+        xSpuzi = path[0].x; ySpuzi = path[0].y; spuziQueue = [];
+        overlay.classList.remove("show");
+
+        setPosition(gary, xGary, yGary);
+        setPosition(spuzi, xSpuzi, ySpuzi);
+
+        // pokaži ciljno točko
+        setPosition(box, path[path.length - 1].x, path[path.length - 1].y);
+
+        animate();
+    }
 
     function animate() {
-        // --- GARY ---
+
         if (indexGary < path.length) {
             let target = path[indexGary];
             let dx = target.x - xGary;
@@ -78,8 +114,7 @@ window.onload = function () {
             let dist = Math.sqrt(dx*dx + dy*dy);
 
             if (dist < speed) {
-                xGary = target.x;
-                yGary = target.y;
+                xGary = target.x; yGary = target.y;
                 spuziQueue.push({x: xGary, y: yGary});
                 indexGary++;
             } else {
@@ -87,37 +122,37 @@ window.onload = function () {
                 yGary += (dy / dist) * speed;
             }
 
-            gary.style.left = xGary + "px";
-            gary.style.top = yGary + "px";
+            setPosition(gary, xGary, yGary);
+            updateDirection(gary, dx);
         }
 
-        // --- SPUZI ---
         if (spuziQueue.length > 0) {
             let target = spuziQueue[0];
             let dx = target.x - xSpuzi;
             let dy = target.y - ySpuzi;
             let dist = Math.sqrt(dx*dx + dy*dy);
 
-            if (dist < speed) {
-                xSpuzi = target.x;
-                ySpuzi = target.y;
-                spuziQueue.shift();
-            } else {
-                xSpuzi += (dx / dist) * speed;
-                ySpuzi += (dy / dist) * speed;
-            }
+            if (dist < speed) { xSpuzi = target.x; ySpuzi = target.y; spuziQueue.shift(); }
+            else { xSpuzi += (dx / dist) * speed; ySpuzi += (dy / dist) * speed; }
 
-            spuzi.style.left = xSpuzi + "px";
-            spuzi.style.top = ySpuzi + "px";
+            setPosition(spuzi, xSpuzi, ySpuzi);
+            updateDirection(spuzi, dx);
         }
 
-        // --- KONEC: prikaži sliko, ko oba dosežeta konec ---
         if (indexGary >= path.length && spuziQueue.length === 0) {
-             overlay.classList.add("show"); // prikaže overlay
+            overlay.classList.add("show");
+            animationId = null;
         } else {
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         }
     }
 
-    animate();
+    restartBtn.addEventListener("click", resetAnimation);
+    window.addEventListener("resize", () => {
+        setPosition(gary, xGary, yGary);
+        setPosition(spuzi, xSpuzi, ySpuzi);
+        setPosition(box, path[path.length - 1].x, path[path.length - 1].y);
+    });
+
+    resetAnimation();
 };
