@@ -1,92 +1,76 @@
 window.onload = function () {
 
-    // ---- DOM elementi ----
     const gary = document.getElementById("gary");
     const spuzi = document.getElementById("spuzi");
     const overlay = document.getElementById("overlay");
     const restartBtn = document.getElementById("restartBtn");
-    const box = document.getElementById("box"); // ciljna točka
+    const box = document.getElementById("box");
 
     let animationId = null;
-    const speed = 1,5; // normalna hitrost
+    const speed = 1;
 
-    const ORIGINAL_WIDTH = 1200;
-    const ORIGINAL_HEIGHT = 1000;
-
-    // ---- POT (originalne px koordinate) ----
+    // ---- POT ----
     let path = [
-        {x: 615, y:135}, {x: 655, y:180}, {x: 667, y:175}, {x: 677, y:182},
-        {x: 690, y:177}, {x: 697, y:185}, {x: 690, y:200}, {x: 707, y:219},
-        {x: 719, y:214}, {x: 730, y:220}, {x: 740, y:215}, {x: 750, y:225},
-        {x: 737, y:255}, {x: 750, y:250}, {x: 770, y:270}, {x: 782, y:260},
-        {x: 765, y:240}, {x: 773, y:227}, {x: 767, y:215}, {x: 775, y:208},
-        {x: 795, y:228}, {x: 785, y:240}, {x: 795, y:250}, {x: 820, y:235},
-        {x: 840, y:255}, {x: 850, y:245}, {x: 843, y:235}, {x: 864, y:215},
-        {x: 885, y:238}, {x: 874, y:247}, {x: 893, y:273}, {x: 918, y:255},
-        {x: 928, y:263}, {x: 940, y:255}, {x: 930, y:242}, {x: 940, y:233},
-        {x: 933, y:217}, {x: 970, y:192}, {x: 988, y:213}, {x: 1000, y:204},
-        {x: 1020, y:225}, {x: 1033, y:218}, {x: 1025, y:206}, {x: 1033, y:196},
-        {x: 1017, y:173}, {x: 1027, y:163}, {x: 1047, y:185}, {x: 1061, y:176},
-        {x: 1068, y:187}, {x: 1047, y:208}, {x: 1053, y:220}, {x: 1033, y:240},
-        {x: 1040, y:252}, {x: 1007, y:283}, {x: 1024, y:306}, {x: 1037, y:298},
-        {x: 1047, y:308}, {x: 1059, y:300}, {x: 1068, y:310}, {x: 1059, y:321},
-        {x: 1067, y:331}, {x: 1057, y:343}, {x: 1065, y:355}, {x: 1053, y:365},
-        {x: 1043, y:355}, {x: 1020, y:374}, {x: 1058, y:422}, {x: 1023, y:452},
-        {x: 1013, y:442}, {x: 1000, y:450}, {x: 990, y:440}, {x: 968, y:457},
-        {x: 975, y:470}, {x: 965, y:480}, {x: 973, y:492}, {x: 962, y:498},
-        {x: 928, y:510}, {x: 918, y:500}, {x: 906, y:507}, {x: 923, y:530},
-        {x: 890, y:563}, {x: 907, y:586}, {x: 896, y:596}, {x: 887, y:586},
-        {x: 875, y:596}, {x: 865, y:586}, {x: 855, y:595}, {x: 870, y:615},
-        {x: 884, y:608}, {x: 894, y:618}, {x: 918, y:600}, {x: 928, y:610},
-        {x: 918, y:625}, {x: 928, y:633}, {x: 948, y:618}, {x: 958, y:625},
-        {x: 970, y:618}, {x: 980, y:628}, {x: 970, y:638}, {x: 1000, y:673},
-        {x: 955, y:715}, {x: 980, y:750}, {x: 995, y:743}, {x: 1005, y:753},
-        {x: 995, y:763}, {x: 1003, y:775}, {x: 993, y:785}, {x: 980, y:775},
-        {x: 930, y:810}, {x: 950, y:835}, {x: 940, y:850}, {x: 950, y:860},
-        {x: 940, y:870}, {x: 950, y:880}, {x: 985, y:855}, {x: 995, y:865},
-        {x: 985, y:875}, {x: 1015, y:910}, {x: 1025, y:900}, {x: 1015, y:890},
-        {x: 1035, y:870}, {x: 1030, y:855}, {x: 1050, y:835}, {x: 1045, y:825},
-        {x: 1055, y:815}, {x: 1065, y:825}, {x: 1085, y:808}, {x: 1060, y:770},
-        {x: 1045, y:775}, {x: 1010, y:735}, {x: 1016, y:720}, {x: 1010, y:710},
-        {x: 1030, y:690}, {x: 1025, y:680}, {x: 1035, y:667}, {x: 1015, y:647},
-        {x: 1003, y:653}, {x: 993, y:643}, {x: 1005, y:630}, {x: 965, y:583},
-        {x: 940, y:600}, {x: 930, y:590}, {x: 940, y:580}, {x: 935, y:565},
-        {x: 958, y:548}, {x: 938, y:524}, {x: 948, y:514}, {x: 968, y:534},
-        {x: 980, y:530}, {x: 990, y:540}, {x: 1005, y:532}, {x: 1033, y:565},
-        {x: 1008, y:583}, {x: 1000, y:573}, {x: 990, y:583}, {x: 1003, y:603}, 
-        {x: 1030, y:610}
+        {"x":99,"y":130},{"x":121,"y":132},{"x":141,"y":138},{"x":154,"y":146},{"x":166,"y":153},
+        {"x":177,"y":165},{"x":190,"y":177},{"x":196,"y":187},{"x":209,"y":184},{"x":216,"y":194},
+        {"x":226,"y":186},{"x":233,"y":193},{"x":225,"y":201},{"x":232,"y":210},{"x":241,"y":221},
+        {"x":253,"y":216},{"x":260,"y":226},{"x":271,"y":216},{"x":279,"y":227},{"x":270,"y":235},
+        {"x":260,"y":242},{"x":268,"y":255},{"x":277,"y":246},{"x":287,"y":259},{"x":296,"y":267},
+        {"x":307,"y":257},{"x":296,"y":247},{"x":289,"y":238},{"x":297,"y":230},{"x":290,"y":218},
+        {"x":301,"y":212},{"x":309,"y":220},{"x":316,"y":228},{"x":311,"y":235},{"x":306,"y":240},
+        {"x":313,"y":248},{"x":322,"y":244},{"x":331,"y":238},{"x":342,"y":240},{"x":349,"y":251},
+        {"x":352,"y":253},{"x":364,"y":244},{"x":355,"y":234},{"x":375,"y":219},{"x":394,"y":238},
+        {"x":381,"y":246},{"x":397,"y":267},{"x":417,"y":250},{"x":426,"y":260},{"x":438,"y":253},
+        {"x":431,"y":241},{"x":441,"y":233},{"x":431,"y":221},{"x":461,"y":199},{"x":478,"y":217},
+        {"x":490,"y":210},{"x":506,"y":229},{"x":517,"y":222},{"x":508,"y":209},{"x":519,"y":203},
+        {"x":501,"y":185},{"x":510,"y":175},{"x":525,"y":192},{"x":539,"y":185},{"x":547,"y":197},
+        {"x":528,"y":212},{"x":536,"y":225},{"x":514,"y":238},{"x":524,"y":250},{"x":493,"y":274},
+        {"x":511,"y":296},{"x":521,"y":287},{"x":526,"y":299},{"x":539,"y":289},{"x":546,"y":300},
+        {"x":537,"y":311},{"x":546,"y":318},{"x":534,"y":327},{"x":544,"y":337},{"x":533,"y":348},
+        {"x":526,"y":335},{"x":504,"y":353},{"x":539,"y":393},{"x":508,"y":419},{"x":500,"y":408},
+        {"x":487,"y":417},{"x":481,"y":408},{"x":459,"y":425},{"x":469,"y":434},{"x":458,"y":443},
+        {"x":465,"y":451},{"x":456,"y":461},{"x":448,"y":450},{"x":429,"y":468},{"x":419,"y":456},
+        {"x":407,"y":467},{"x":423,"y":485},{"x":394,"y":512},{"x":411,"y":533},{"x":399,"y":542},
+        {"x":394,"y":533},{"x":379,"y":541},{"x":372,"y":531},{"x":363,"y":537},{"x":379,"y":558},
+        {"x":389,"y":552},{"x":398,"y":560},{"x":417,"y":545},{"x":427,"y":554},{"x":418,"y":563},
+        {"x":425,"y":573},{"x":444,"y":558},{"x":454,"y":567},{"x":465,"y":559},{"x":473,"y":567},
+        {"x":465,"y":575},{"x":487,"y":604},{"x":448,"y":639},{"x":472,"y":670},{"x":483,"y":662},
+        {"x":490,"y":671},{"x":482,"y":681},{"x":490,"y":691},{"x":481,"y":699},{"x":471,"y":691},
+        {"x":439,"y":719},{"x":429,"y":722},{"x":437,"y":732},{"x":448,"y":742},{"x":442,"y":750},
+        {"x":440,"y":757},{"x":445,"y":763},{"x":438,"y":773},{"x":436,"y":773},{"x":442,"y":781},
+        {"x":475,"y":756},{"x":481,"y":766},{"x":473,"y":775},{"x":482,"y":788},{"x":495,"y":803},
+        {"x":508,"y":798},{"x":501,"y":789},{"x":507,"y":782},{"x":519,"y":771},{"x":512,"y":760},
+        {"x":528,"y":749},{"x":528,"y":738},{"x":524,"y":733},{"x":536,"y":725},{"x":541,"y":733},
+        {"x":563,"y":716},{"x":540,"y":687},{"x":527,"y":693},{"x":497,"y":658},{"x":502,"y":648},
+        {"x":499,"y":639},{"x":499,"y":632},{"x":509,"y":625},{"x":516,"y":618},{"x":509,"y":610},
+        {"x":519,"y":599},{"x":502,"y":581},{"x":490,"y":586},{"x":483,"y":579},{"x":491,"y":570},
+        {"x":480,"y":556},{"x":473,"y":544},{"x":460,"y":530},{"x":450,"y":537},{"x":436,"y":546},
+        {"x":429,"y":535},{"x":439,"y":527},{"x":432,"y":517},{"x":440,"y":511},{"x":451,"y":501},
+        {"x":443,"y":489},{"x":436,"y":479},{"x":444,"y":473},{"x":457,"y":484},{"x":472,"y":486},
+        {"x":483,"y":489},{"x":491,"y":487},{"x":501,"y":497},{"x":507,"y":507},{"x":513,"y":515},
+        {"x":509,"y":523},{"x":497,"y":530},{"x":489,"y":521},{"x":483,"y":526},{"x":480,"y":532},
+        {"x":489,"y":540},{"x":497,"y":548},{"x":514,"y":565},{"x":531,"y":581}
     ];
 
     let xGary, yGary, indexGary;
     let xSpuzi, ySpuzi, spuziQueue;
+    let lastDirection = 1; // 1 = desno, -1 = levo
 
-    // ---- FUNKCIJA ZA RESPONSIVE POZICIJE ----
     function setPosition(el, x, y) {
-        const screenW = window.innerWidth;
-        const screenH = window.innerHeight;
-
-        const imgRatio = ORIGINAL_WIDTH / ORIGINAL_HEIGHT;
-        const screenRatio = screenW / screenH;
-
-        let width, height, offsetX = 0, offsetY = 0;
-
-        if (screenRatio > imgRatio) {
-            height = screenH;
-            width = height * imgRatio;
-            offsetX = (screenW - width) / 2;
-        } else {
-            width = screenW;
-            height = width / imgRatio;
-            offsetY = (screenH - height) / 2;
-        }
-
-        el.style.left = (x / ORIGINAL_WIDTH * width + offsetX) + "px";
-        el.style.top  = (y / ORIGINAL_HEIGHT * height + offsetY) + "px";
+        el.style.left = x + "px";
+        el.style.top = y + "px";
     }
 
-    function updateDirection(el, dx) {
-        if (dx > 0) el.style.transform = "translate(-50%, -50%) scaleX(1)";
-        else if (dx < 0) el.style.transform = "translate(-50%, -50%) scaleX(-1)";
+    // Gary se obrne glede na prejšnjo x-smer
+    function updateGaryDirection(dx) {
+        if (dx > 1) lastDirection = -1;
+        else if (dx < -1) lastDirection = 1;
+        gary.style.transform = `translate(-50%, -50%) scaleX(${lastDirection})`;
+    }
+
+    function updateSpuziDirection(dx) {
+        if (dx > 1) spuzi.style.transform = "translate(-50%, -50%) scaleX(1)";
+        else if (dx < -1) spuzi.style.transform = "translate(-50%, -50%) scaleX(-1)";
     }
 
     function resetAnimation() {
@@ -95,18 +79,16 @@ window.onload = function () {
         xGary = path[0].x; yGary = path[0].y; indexGary = 0;
         xSpuzi = path[0].x; ySpuzi = path[0].y; spuziQueue = [];
         overlay.classList.remove("show");
+        lastDirection = 1;
 
         setPosition(gary, xGary, yGary);
         setPosition(spuzi, xSpuzi, ySpuzi);
-
-        // pokaži ciljno točko
         setPosition(box, path[path.length - 1].x, path[path.length - 1].y);
 
         animate();
     }
 
     function animate() {
-
         if (indexGary < path.length) {
             let target = path[indexGary];
             let dx = target.x - xGary;
@@ -123,7 +105,7 @@ window.onload = function () {
             }
 
             setPosition(gary, xGary, yGary);
-            updateDirection(gary, dx);
+            updateGaryDirection(dx);
         }
 
         if (spuziQueue.length > 0) {
@@ -132,11 +114,15 @@ window.onload = function () {
             let dy = target.y - ySpuzi;
             let dist = Math.sqrt(dx*dx + dy*dy);
 
-            if (dist < speed) { xSpuzi = target.x; ySpuzi = target.y; spuziQueue.shift(); }
-            else { xSpuzi += (dx / dist) * speed; ySpuzi += (dy / dist) * speed; }
+            if (dist < speed) {
+                xSpuzi = target.x; ySpuzi = target.y; spuziQueue.shift();
+            } else {
+                xSpuzi += (dx / dist) * speed;
+                ySpuzi += (dy / dist) * speed;
+            }
 
             setPosition(spuzi, xSpuzi, ySpuzi);
-            updateDirection(spuzi, dx);
+            updateSpuziDirection(dx);
         }
 
         if (indexGary >= path.length && spuziQueue.length === 0) {
@@ -148,6 +134,7 @@ window.onload = function () {
     }
 
     restartBtn.addEventListener("click", resetAnimation);
+
     window.addEventListener("resize", () => {
         setPosition(gary, xGary, yGary);
         setPosition(spuzi, xSpuzi, ySpuzi);

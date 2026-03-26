@@ -1,74 +1,82 @@
 *{
-	padding:0;
-	margin:0;
+    padding:0;
+    margin:0;
 }
 body{
-	background-image:url('../slike/labirint.png');
-	background-repeat:no-repeat;
-	background-size:cover;
-	background-position:fixed;
-	height:100%;
-	width:100%;
+    background:url('../slike/ozadje_pravo.png') no-repeat center center;
+    background-size:cover;
+    background-position:relative;
+    height:100%;
+    width:100%;
+    overflow:hidden;
+}
+#bg{
+    background:url("../slike/ananas.png") no-repeat center center;
+    background-size:cover; 
+    height:900px;
+    width:900px;
+    position: relative;  /* pomembno za absolutno pozicioniranje otrok */
+    margin: 0 auto;       /* centriranje div-a */
+}
+#gary, #spuzi {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 #gary {
-    position: absolute;
     width: 20px;
     height: 20px;
-	background:url("../sprites/gary_prava.gif") no-repeat center center;
-	background-size:contain;
-    position: absolute;
-    transform: translate(-50%, -50%);
+    background-image: url("../sprites/gary_prava.gif");
 }
 #spuzi {
-    position: absolute;
     width: 30px;
     height: 30px;
-	background:url("../sprites/spuzi_prava.gif") no-repeat center center;
-	background-size:contain;
-    position: absolute;
-    transform: translate(-50%, -50%);
+    background-image: url("../sprites/spuzi_prava.gif");
 }
-    /* lahko dodaš transition za smooth efekt, ampak ni nujno */
-}
+
 #canvas {
     position: absolute;
     left: 0;
     top: 0;
     width: 1200px;
     height: 1000px;
-    z-index: -1; /* canvas v ozadju, če boš risal labirint */
+    z-index: -1;
 }
 #overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-	margin-top:500px;
-	margin-left:1000px;
+    top: 410px;
+    left: 960px;
     width: 250px;
     height: 250px;
     background-image: url('../sprites/konec.gif');
     background-size: cover;
     background-position: center;
     z-index: 90;
-    opacity: 0;            /* skrito na začetku */
-    pointer-events: none;  /* ne moti klikov */
-    transition: opacity 0.5s ease-in-out;	/* za fade efekt */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
 }
 #overlay.show {
-    opacity: 1;            /* prikazano */
+    opacity: 1;
     pointer-events: auto;
 }
-/*img{
-	height:20px;
-	width:20px;
-}*/
-/*.pika-bg {
-  position: absolute;
-  top: 125px;    /* y */
- /* left: 615px;  /* x */
-  /*width: 10px;  /* velikost ciljne točke*/
-  /*height: 10px;
-  cursor: pointer;
-  z-index: 20;
-  background: red; /* neviden, a lažje klikljiv */
-/*}
+#gumb {
+    position: absolute;  /* pozicija glede na #bg */
+    left: 70px;          /* premakni desno */
+    top: 580px;          /* premakni navzdol */
+    z-index: 100;        /* da je nad ozadjem */
+}
+
+#gumb button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(245, 240, 90, 1); /* po želji */
+	color:blue;
+	opacity:30%;
+    border-radius: 5px;       /* po želji */
+	border: none;  /* odstrani privzeti rob brskalnika */
+    outline: none; /* odstrani modri rob, ki se pokaže ob fokusu */
+}
