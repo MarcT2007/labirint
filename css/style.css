@@ -6,8 +6,8 @@ body{
     background:url('../slike/ozadje_pravo.png') no-repeat center center;
     background-size:cover;
     background-position:relative;
-    height:100%;
-    width:100%;
+    height:100vh;
+    width:100vw;
     overflow:hidden;
 }
 #bg{
@@ -65,7 +65,7 @@ body{
 #gumb {
     position: absolute;  /* pozicija glede na #bg */
     left: 70px;          /* premakni desno */
-    top: 580px;          /* premakni navzdol */
+    top: 660px;          /* premakni navzdol */
     z-index: 100;        /* da je nad ozadjem */
 }
 

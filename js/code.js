@@ -7,7 +7,7 @@ window.onload = function () {
     const box = document.getElementById("box");
 
     let animationId = null;
-    const speed = 1;
+    const speed =0.8;
 
     // ---- POT ----
     let path = [
